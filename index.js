@@ -1,4 +1,5 @@
 const { insertWebSocket, removeWebSocket, socketDisconnected } = require('./factory');
+const { setNotificationInterval } = require('./src/notify/notifyConfig');
 
 const WebSocketServer = require('ws');
 
@@ -12,6 +13,9 @@ const strikeManager = (ws, data) => {
     case 'sell':
       removeWebSocket(ws, data.strike);
       break;
+    case 'interval':
+      setNotificationInterval(ws.id, data.time_in_sec);
+      break;
     default:
       break;
   }
@@ -19,6 +23,7 @@ const strikeManager = (ws, data) => {
 
 wss.on('connection', ws => {
   ws.id = ws._socket._handle.fd;
+  setNotificationInterval(ws.id);
 
   ws.on('message', data => {
     const originalData = data.toString(); 

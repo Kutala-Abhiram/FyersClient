@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "fyers-api-v2": "^1.0.3",
+    "moment": "^2.29.3",
     "ws": "^8.6.0"
   }
 }
