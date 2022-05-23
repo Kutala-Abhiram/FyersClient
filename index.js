@@ -7,10 +7,10 @@ const wss = new WebSocketServer.Server({ port: 8080 });
 
 const strikeManager = (ws, data) => {
   switch(data.operation) {
-    case 'buy':
+    case 'add':
       insertWebSocket(ws, data.strike);
       break;
-    case 'sell':
+    case 'remove':
       removeWebSocket(ws, data.strike);
       break;
     case 'interval':

@@ -30,7 +30,7 @@ module.exports = class FyersConnect {
   }
 
   unsubscribeSymbol(symbol) {
-    let reqBody = { token: fyersConfig.token, dataType: dataType, symbol: [symbol] };
+    let reqBody = { token: this.token, dataType: updateSymbol, symbol: [symbol] };
     return fyers.fyers_unsuscribe(reqBody);
   }
 

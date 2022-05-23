@@ -1,14 +1,17 @@
 const FyersConnect = require('./src/FyersConnect');
 const { notifyWebSocket } = require('./src/notify/WebSocketNotify');
-const token = '2345678';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZnllcnMuaW4iLCJpYXQiOjE2NTMyNzY3OTIsImV4cCI6MTY1MzM1MjIxMiwibmJmIjoxNjUzMjc2NzkyLCJhdWQiOlsiZDoxIiwiZDoyIl0sInN1YiI6ImFjY2Vzc190b2tlbiIsImF0X2hhc2giOiJnQUFBQUFCaWl3QjRtT0lyalhrRlg1bTdHSTA3c3A0VWxTRlVtWjNYSXNIX3lRZzlfaFBORlp4Z3FCOVFBMTVwUWx5b2VobFBUcDkwWmR1Q2duWFhESE1fb2UtdFJ2am02TzhXd2lWVWh6MGhKX2FmWTZHalNFaz0iLCJkaXNwbGF5X25hbWUiOiJLVVRBTEEgQUJISVJBTSIsImZ5X2lkIjoiWEswNDMyOCIsImFwcFR5cGUiOjEwMCwicG9hX2ZsYWciOiJOIn0.hH1-WnryUPKVlNflElAQmJWdoP2QEzWhAZXj6fqf2ro';
 
 let fyersClient = new FyersConnect(token);
 let strikeMapping = {};
 
 const insertWebSocket = (ws, strike) => {
   if (!strikeMapping[strike]) {
-    subscribeSymbols(strike);
     strikeMapping[strike] = [];
+  }
+
+  if(strikeMapping[strike].length === 0) {
+    subscribeSymbols(strike);
   }
 
   if(strikeMapping[strike].indexOf(ws) === -1) {
@@ -19,14 +22,14 @@ const insertWebSocket = (ws, strike) => {
 const removeWebSocket = (ws, strike) => {
   if (strikeMapping[strike]) {
     strikeMapping[strike] = strikeMapping[strike].filter(w => w !== ws);
-  }
 
-  if (strikeMapping[strike].length === 0) {
-    fyersClient.unsubscribeSymbol(strike);
-  } else {
-    strikeMapping[strike].forEach(element => {
-      element.send(`${ws.id} removed from strike ${strike}`);
-    });
+    if (strikeMapping[strike].length === 0) {
+      fyersClient.unsubscribeSymbol(strike);
+    } else {
+      strikeMapping[strike].forEach(element => {
+        element.send(`${ws.id} removed from strike ${strike}`);
+      });
+    }
   }
 };
 
