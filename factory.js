@@ -1,6 +1,6 @@
 const FyersConnect = require('./src/FyersConnect');
 const { notifyWebSocket } = require('./src/notify/WebSocketNotify');
-const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZnllcnMuaW4iLCJpYXQiOjE2NTMyNzY3OTIsImV4cCI6MTY1MzM1MjIxMiwibmJmIjoxNjUzMjc2NzkyLCJhdWQiOlsiZDoxIiwiZDoyIl0sInN1YiI6ImFjY2Vzc190b2tlbiIsImF0X2hhc2giOiJnQUFBQUFCaWl3QjRtT0lyalhrRlg1bTdHSTA3c3A0VWxTRlVtWjNYSXNIX3lRZzlfaFBORlp4Z3FCOVFBMTVwUWx5b2VobFBUcDkwWmR1Q2duWFhESE1fb2UtdFJ2am02TzhXd2lWVWh6MGhKX2FmWTZHalNFaz0iLCJkaXNwbGF5X25hbWUiOiJLVVRBTEEgQUJISVJBTSIsImZ5X2lkIjoiWEswNDMyOCIsImFwcFR5cGUiOjEwMCwicG9hX2ZsYWciOiJOIn0.hH1-WnryUPKVlNflElAQmJWdoP2QEzWhAZXj6fqf2ro';
+const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZnllcnMuaW4iLCJpYXQiOjE2NTMzNjIzNTQsImV4cCI6MTY1MzQzODYxNCwibmJmIjoxNjUzMzYyMzU0LCJhdWQiOlsiZDoxIiwiZDoyIl0sInN1YiI6ImFjY2Vzc190b2tlbiIsImF0X2hhc2giOiJnQUFBQUFCaWpFNnlTR3dFZlJCbjJqM1NrTkI4V1JnaVlFSnMya2wtZVNVS0dmNUg1b2VkRGx3M0xBamN1VDBKTXU1RldYVmxZSmVEemcyMGxRQV9fSlV4MjNnZi1sTGtWdTBTN3ZqUWJrU2VfWXc3cXprRUdDOD0iLCJkaXNwbGF5X25hbWUiOiJLVVRBTEEgQUJISVJBTSIsImZ5X2lkIjoiWEswNDMyOCIsImFwcFR5cGUiOjEwMCwicG9hX2ZsYWciOiJOIn0.23_6__oAZRjGzjz3Xsqs5RUkgdAd7VIQdaXIUz6xz_c';
 
 let fyersClient = new FyersConnect(token);
 let strikeMapping = {};
@@ -36,7 +36,7 @@ const removeWebSocket = (ws, strike) => {
 const socketDisconnected = ws => {
   for (const strike in strikeMapping) {
     if (strikeMapping[strike].indexOf(ws) !== -1) {
-      strikeMapping[strike] = strikeMapping[strike].filter(w => w !== ws);
+      removeWebSocket(ws, strike);
     }
   }
 }
