@@ -11,6 +11,8 @@
   "author": "Kutala Abhiram",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
     "fyers-api-v2": "^1.0.3",
     "moment": "^2.29.3",
     "ws": "^8.6.0"

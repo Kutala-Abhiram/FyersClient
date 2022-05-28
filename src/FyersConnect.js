@@ -48,9 +48,19 @@ module.exports = class FyersConnect {
     let quoteSymbols =  await quotes.setSymbol(symbols.toString()).getQuotes();
     console.log(quoteSymbols);
     let parsedData = quoteSymbols;
+    let lp_hash = {}
 
     if(parsedData && parsedData["s"] === "ok" && parsedData["d"] !== null) {
-      return parsedData["d"];
+      for(let i = 0; i<parsedData["d"].length; i++) {
+        const quotedata = parsedData["d"][i];
+        const name = quotedata["n"];
+        const lp = quotedata["v"]["lp"];
+        lp_hash[name] = lp;
+      }
+    } else {
+      return quoteSymbols;
     }
+
+    return lp_hash;
   }
 }
