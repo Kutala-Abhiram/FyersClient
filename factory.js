@@ -36,7 +36,7 @@ const removeWebSocket = (ws, strike) => {
 const socketDisconnected = ws => {
   for (const strike in strikeMapping) {
     if (strikeMapping[strike].indexOf(ws) !== -1) {
-      strikeMapping[strike] = strikeMapping[strike].filter(w => w !== ws);
+      removeWebSocket(ws, strike);
     }
   }
 }

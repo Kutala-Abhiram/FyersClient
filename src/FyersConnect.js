@@ -14,6 +14,7 @@ module.exports = class FyersConnect {
     let reqBody = { token: this.token, dataType: updateSymbol, symbol: [symbol] };
       
     try {
+      console.log("reached....");
       fyers.fyers_connect(reqBody, (websocketData) => {
         let parsedData = JSON.parse(websocketData);
         if(parsedData && parsedData["s"] === "ok" && parsedData["d"] !== null && parsedData["d"]["7208"] !== null) {
